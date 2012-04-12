@@ -5,6 +5,11 @@
    Page Header
    ========================================================================== */
 
+.navbar-inner {
+	background-color: #4458CE;
+	background-image: none;
+}
+
 .page_logo {
 	width: 40%;
 	float: left;
