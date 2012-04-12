@@ -154,7 +154,7 @@ LOGOUT_URL = "/account/logout/"
 DATABASES = {
     "default": {
         # "postgresql_psycopg2", "postgresql", "mysql", "sqlite3" or "oracle".
-        "ENGINE": "",
+        "ENGINE": "django.db.backends.",
         # DB name or path to database file if using sqlite3.
         "NAME": "",
         # Not used with sqlite3.
