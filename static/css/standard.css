@@ -6,58 +6,59 @@
    ========================================================================== */
 
 .navbar-inner {
-	background-color: #4458CE;
-	background-image: none;
+    background-color: #C46210;
+    background-image: none;
 }
 
 .page_logo {
-	width: 40%;
-	float: left;
-	border: black 1pt solid; /* just to show you the display box */
+    width: 40%;
+    float: left;
+    border: black 1pt solid; /* just to show you the display box */
 }
 
 .page_title_graphic {
-	margin-left: 5%;
-	width: 50%;
-	float: left;
-	border: black 1pt solid; /* just to show you the display box */
+    margin-left: 5%;
+    width: 50%;
+    float: left;
+    border: black 1pt solid; /* just to show you the display box */
 }
 
 
 /* =============================================================================
    Navigation
    ========================================================================== */
-   
+
 .nav_bar {
-	float: left;
-	width: 100%;
-	border: black 1pt solid; /* just to show you the display box */
+    float: left;
+    width: 100%;
+    border: black 1pt solid; /* just to show you the display box */
 }
 
 .nav_bar_links li {
-	display: inline;
-	list-style: none;
-	width: 18%;
-	border: black 1pt solid; /* just to show you the display box */
+    display: inline;
+    list-style: none;
+    width: 18%;
+    border: black 1pt solid; /* just to show you the display box */
 }
 
 /* dropdown menu */
 .nav_bar_links li ul {
-	position:absolute;
-	left:-9999px;
+    position:absolute;
+    left:-9999px;
 }
 
 .nav_bar_links li ul li {
-	background-color: black;
-	color:white;
+    background-color: black;
+    color:white;
 }
 
 .nav_bar_links li:hover ul {
-	left:0px;
+    left:0px;
 }
 
 .nav_bar_links li ul li:hover {
-	background-color: red;
+    background-color: red;
+    color:#e05631;
 }
 
 
@@ -66,18 +67,32 @@
    ========================================================================== */
 
 .column {
-	width: 45%;
-	float: left;
-	border: black 1pt solid; /* just to show you the display box */
-	background-color: gray;
+    width: 45%;
+    float: left;
+    border: black 1pt solid; /* just to show you the display box */
+    background-color: gray;
 }
 
 .rounded_corners {
-	-moz-border-radius:10px; /* Firefox */
-	-webkit-border-radius:10px; /* Safari and chrome */
-	-khtml-border-radius:10px; /* Linux browsers */
-	border-radius:10px; /* CSS3 */
-	behaviour:url(border-radius.htc);
+    -moz-border-radius:10px; /* Firefox */
+    -webkit-border-radius:10px; /* Safari and chrome */
+    -khtml-border-radius:10px; /* Linux browsers */
+    border-radius:10px; /* CSS3 */
+    behaviour:url(border-radius.htc);
 }
 
 
+.navbar .brand{
+    color:white;
+}
+
+.navbar #primary-menu li:hover{
+    background-color:#7C0A02;
+}
+.navbar #primary-menu li a:hover{
+    color:white;
+}
+
+.navbar .tagline{
+    color:white;
+}
