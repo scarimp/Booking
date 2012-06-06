@@ -1,3 +1,0 @@
-username: student
-email: student@example.com
-password: a
