@@ -1,5 +1,5 @@
-from polls.models import *
-#from polls.models import Student
+from exambookings.models import *
+#from exambookings.models import Student
 from django.contrib import admin
 
 #Relationships
