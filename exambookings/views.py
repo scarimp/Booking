@@ -4,8 +4,18 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from exambookings.models import Choice, Poll
+from django.views.generic import DetailView
 
-
+class ShowBookings(DetailView):
+    def render_to_response(self, context):
+        # Look for a 'format=json' GET argument
+        if self.request.GET.get('format','html') == 'json':
+            return JSONResponseMixin.render_to_response(self, context)
+        else:
+            return SingleObjectTemplateResponseMixin.render_to_response(self, context)
+##
+# Original Code
+##
 def index(request):
     def index(request):
     	latest_poll_list = Poll.objects.all().order_by('-pub_date')[:5]
@@ -38,4 +48,21 @@ def vote(request, poll_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('poll_results', args=(p.id,)))
 #my code starts below
+class ShowBookings(DetailView):
+    def render_to_response(self, context):
+        # Look for a 'format=json' GET argument
+        if self.request.GET.get('format','html') == 'json':
+            return JSONResponseMixin.render_to_response(self, context)
+        else:
+            return SingleObjectTemplateResponseMixin.render_to_response(self, context)
+
+
+
+
+
+
+
+
+
+
 

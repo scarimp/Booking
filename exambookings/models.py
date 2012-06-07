@@ -55,7 +55,15 @@ class Staff(models.Model):
     
     def __unicode__(self):
         return (self.name + " and " + str(self.emailAddress))
-        
+
+class Booking(models.Model):
+    student = models.ForeignKey(Student)
+    course = models.ForeignKey(Course)
+    test = models.ForeignKey(Test)
+    examCenter = models.ForeignKey(ExamCenter)
+    courseTeacher = models.ForeignKey(Staff)
+    workPeriod = models.ForeignKey(WorkPeriod)
+
 #Relations
 class StudentBelongsToCourse(models.Model):
     student = models.ForeignKey(Student)
