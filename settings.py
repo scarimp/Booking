@@ -3,7 +3,7 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-DEV_ROOT = "/media/VirtualHome/student/VirtualShare/Booking/" 
+DEV_ROOT = "/home/conner/Github/Booking/" 
     # this string must end in slash/
     # change this when project folder moves during development!
 
