@@ -49,9 +49,11 @@ admin.site.register(Test, TestAdmin)
 admin.site.register(ExamCenter)
 admin.site.register(Staff)
 admin.site.register(WorkPeriod)
+admin.site.register(Booking)
 
-
-#Original Code below
+##
+# Original Code
+##
 class ChoiceInline(admin.TabularInline):
     model = Choice
     extra = 3
