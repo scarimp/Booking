@@ -1,6 +1,6 @@
 ﻿from django.conf.urls.defaults import *
 from django.views.generic import DetailView, ListView
-from exambookings.models import Poll
+from exambookings.models import *
 
 urlpatterns = patterns('',
     url(r'^$',
@@ -19,4 +19,7 @@ urlpatterns = patterns('',
         name='poll_results'),
     url(r'^(?P<poll_id>\d+)/vote/$', 'exambookings.views.vote'),
     #my code starts below
+    url(r'^bookings/$', ListView.as_view(
+        model=Booking,
+    )),
 )
