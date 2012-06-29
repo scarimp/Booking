@@ -56,7 +56,8 @@ class ShowBookings(DetailView):
         else:
             return SingleObjectTemplateResponseMixin.render_to_response(self, context)
 
-
+def static_page(request, file_name):
+    return render_to_response('exambookings/static_pages/'+file_name, {})
 
 
 
