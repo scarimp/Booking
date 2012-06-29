@@ -67,3 +67,4 @@ def static_page(request, file_name):
 
 
 
+
