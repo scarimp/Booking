@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 from django.views.generic import DetailView, ListView
 #from exambookings.models import Poll
+from exambookings.views import ShowBookings
 
 
 urlpatterns = patterns('',
@@ -23,5 +24,6 @@ urlpatterns = patterns('',
     #         template_name='exambookings/results.html'),
     #     name='poll_results'),
     # url(r'^(?P<poll_id>\d+)/vote/$', 'exambookings.views.vote'), # this one left over from Poll App
+    url(r'^show_bookings/$', ShowBookings.as_view()),
     url(r'^static_page/(?P<file_name>.*\.html)$', 'exambookings.views.static_page'), # test out way to serve static page as though it were dynamic
 ) + static(settings.STATIC_URL, document_root='exambookings/static/')

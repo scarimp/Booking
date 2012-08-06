@@ -1,22 +1,25 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 from django.shortcuts import get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-# from exambookings.models import Choice, Poll
-from django.views.generic import DetailView
+from exambookings.models import Booking
+from django.views.generic import DetailView, ListView
+from django.views.generic.detail import SingleObjectTemplateResponseMixin
 
-
-class ShowBookings(DetailView):
-    def render_to_response(self, context):
-        # Look for a 'format=json' GET argument
-        if self.request.GET.get('format','html') == 'json':
-            return JSONResponseMixin.render_to_response(self, context)
-        else:
-            return SingleObjectTemplateResponseMixin.render_to_response(self, context)
+class ShowBookings(ListView):
+    model = Booking
+    queryset = Booking.objects.all()
+    context_object_name="bookings_list"
+    template_name = 'exambookings/bookings_list.html'
+        
+    @method_decorator(permission_required('exambookings.staff_view'))
+    def dispatch(self, *args, **kwargs):
+        return super(ShowBookings, self).dispatch(*args, **kwargs)
 
 @permission_required('exambookings.staff_view')
 def static_page(request, file_name):

@@ -1,0 +1,10 @@
+{% for booking in bookings_list %}
+<ul>
+    <li>{{ booking.student }}</li>
+    <li>{{ booking.course }}</li>
+    <li>{{ booking.test }}</li>
+    <li>{{ booking.examCenter }}</li>
+    <li>{{ booking.courseTeacher }}</li>
+    <li>{{ booking.workPeriod }}</li>    
+</ul>
+{% endfor %}
