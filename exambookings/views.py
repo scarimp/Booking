@@ -1,3 +1,6 @@
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
+
 # Create your views here.
 from django.shortcuts import get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
@@ -15,6 +18,7 @@ class ShowBookings(DetailView):
         else:
             return SingleObjectTemplateResponseMixin.render_to_response(self, context)
 
+@permission_required('exambookings.staff_view')
 def static_page(request, file_name):
     return render_to_response('exambookings/static_pages/'+file_name, {})
 
