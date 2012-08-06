@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from django.views.generic import DetailView, ListView
-from exambookings.models import Poll
+#from exambookings.models import Poll
 
 
 urlpatterns = patterns('',
