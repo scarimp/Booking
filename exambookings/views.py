@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.utils.decorators import method_decorator
 
 # Create your views here.
@@ -11,17 +11,20 @@ from exambookings.models import Booking
 from django.views.generic import DetailView, ListView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 
+def any_permission_required(*perms):
+    return user_passes_test(lambda u: any(u.has_perm(perm) for perm in perms))
+
 class ShowBookings(ListView):
     model = Booking
     queryset = Booking.objects.all()
     context_object_name="bookings_list"
     template_name = 'exambookings/bookings_list.html'
         
-    @method_decorator(permission_required('exambookings.staff_view'))
+    @method_decorator(any_permission_required('exambookings.teacher_view', 'exambookings.exam_center_view'))
     def dispatch(self, *args, **kwargs):
         return super(ShowBookings, self).dispatch(*args, **kwargs)
 
-@permission_required('exambookings.staff_view')
+@login_required
 def static_page(request, file_name):
     return render_to_response('exambookings/static_pages/'+file_name, {})
 

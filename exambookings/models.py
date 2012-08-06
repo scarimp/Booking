@@ -66,7 +66,8 @@ class Booking(models.Model):
 
     class Meta:
         permissions = (
-            ("staff_view", "Can view bookings as staff"),
+            ("teacher_view", "Can view teacher's own bookings"),
+            ("exam_center_view", "Can view all bookings"),
             )
 
 
