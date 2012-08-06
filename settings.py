@@ -121,7 +121,7 @@ AUTH_PROFILE_MODULE = 'profiles.Profile'
 USERENA_DISABLE_PROFILE_LIST = True
 USERENA_MUGSHOT_SIZE = 140
 
-ROOT_URLCONF = 'exampleApp.urls'
+ROOT_URLCONF = 'Booking.urls'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, "templates/"),
