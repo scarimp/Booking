@@ -64,6 +64,12 @@ class Booking(models.Model):
     courseTeacher = models.ForeignKey(Staff)
     workPeriod = models.ForeignKey(WorkPeriod)
 
+    class Meta:
+        permissions = (
+            ("staff_view", "Can view bookings as staff"),
+            )
+
+
 #Relations
 class StudentBelongsToCourse(models.Model):
     student = models.ForeignKey(Student)
