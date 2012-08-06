@@ -24,8 +24,11 @@ class ShowBookings(ListView):
         return super(ShowBookings, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        theStaff = get_object_or_404(Staff, emailAddress__exact=self.request.user.email)
-        return Booking.objects.filter(courseTeacher=theStaff)
+        if (self.request.user.has_perm('exambookings.exam_center_view')):
+            return Booking.objects.all()
+        else:
+            theStaff = get_object_or_404(Staff, emailAddress__exact=self.request.user.email)
+            return Booking.objects.filter(courseTeacher=theStaff)
 
 @login_required
 def static_page(request, file_name):
