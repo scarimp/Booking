@@ -1,17 +1,27 @@
 from django.db import models
 import datetime
 
+from django.contrib.auth.models import User
+
 # Create your models here.
-class Student(models.Model):
-    firstName = models.CharField(max_length=25)
-    lastName = models.CharField(max_length=25)
-    emailAddress = models.EmailField(max_length=254)
+# class Student(models.Model):
+#     firstName = models.CharField(max_length=25)
+#     lastName = models.CharField(max_length=25)
+#     emailAddress = models.EmailField(max_length=254)
+#     grade = models.IntegerField(max_length=2)
+#     accomodations = models.TextField(max_length=400)
+    
+#     def __unicode__(self):
+#         return (self.firstName + " and " + str(self.emailAddress))
+    
+class StudentProfile(models.Model):
+    user = models.OneToOneField(User,
+                                unique=True,
+                                verbose_name= ('user'),
+                                related_name='student_profile')
     grade = models.IntegerField(max_length=2)
     accomodations = models.TextField(max_length=400)
     
-    def __unicode__(self):
-        return (self.firstName + " and " + str(self.emailAddress))
-
 class Test(models.Model):
     name = models.CharField(max_length=40)
     duration = models.IntegerField(max_length=4)
@@ -23,7 +33,7 @@ class Test(models.Model):
 class Course(models.Model):
     subject = models.CharField(max_length=40)
     level = models.CharField(max_length=6)
-    students = models.ManyToManyField(Student, through='StudentBelongsToCourse')
+    students = models.ManyToManyField(StudentProfile, through='StudentBelongsToCourse')
     tests = models.ManyToManyField(Test, through='CourseAssessedByTest')
     def __unicode__(self):
         return (self.subject + " @ " + self.level)
@@ -40,28 +50,38 @@ class ExamCenter(models.Model):
     deskSeats = models.IntegerField(max_length=4)
     computerSeats = models.IntegerField(max_length=4)
     materialAvailable = models.TextField(max_length=400)
-    students = models.ManyToManyField(Student, through='StudentAssignedToExamCenter')
+    students = models.ManyToManyField(StudentProfile, through='StudentAssignedToExamCenter')
     workPeriods = models.ManyToManyField(WorkPeriod, through='WorkPeriodAssignedToExamCenter')
     
     def __unicode__(self):
         return (self.roomNumber + " with " + str(self.deskSeats) + " and  " + str(self.computerSeats) + " seats")
         
-class Staff(models.Model):
-    name = models.CharField(max_length=25)
-    emailAddress = models.EmailField(max_length=254)
-    speciality = models.TextField(max_length=400)
+# class Staff(models.Model):
+#     name = models.CharField(max_length=25)
+#     emailAddress = models.EmailField(max_length=254)
+#     speciality = models.TextField(max_length=400)
+#     courses = models.ManyToManyField(Course, through='StaffTeachingCourse')
+#     workPeriods = models.ManyToManyField(WorkPeriod, through='StaffHasAWorkPeriod')
+    
+#     def __unicode__(self):
+#         return (self.name + " and " + str(self.emailAddress))
+
+class StaffProfile(models.Model):
+    user = models.OneToOneField(User,
+                                unique=True,
+                                verbose_name= ('user'),
+                                related_name='staff_profile')
     courses = models.ManyToManyField(Course, through='StaffTeachingCourse')
     workPeriods = models.ManyToManyField(WorkPeriod, through='StaffHasAWorkPeriod')
-    
-    def __unicode__(self):
-        return (self.name + " and " + str(self.emailAddress))
+    speciality = models.TextField(max_length=400)
+
 
 class Booking(models.Model):
-    student = models.ForeignKey(Student)
+    student = models.ForeignKey(StudentProfile)
     course = models.ForeignKey(Course)
     test = models.ForeignKey(Test)
     examCenter = models.ForeignKey(ExamCenter)
-    courseTeacher = models.ForeignKey(Staff)
+    courseTeacher = models.ForeignKey(StaffProfile)
     workPeriod = models.ForeignKey(WorkPeriod)
 
     class Meta:
@@ -73,11 +93,11 @@ class Booking(models.Model):
 
 #Relations
 class StudentBelongsToCourse(models.Model):
-    student = models.ForeignKey(Student)
+    student = models.ForeignKey(StudentProfile)
     course = models.ForeignKey(Course)
     
 class StudentAssignedToExamCenter(models.Model):
-    student = models.ForeignKey(Student)
+    student = models.ForeignKey(StudentProfile)
     examCenter = models.ForeignKey(ExamCenter)
     
 class CourseAssessedByTest(models.Model):
@@ -85,11 +105,11 @@ class CourseAssessedByTest(models.Model):
     course = models.ForeignKey(Course)
 
 class StaffTeachingCourse(models.Model):
-    staff = models.ForeignKey(Staff)
+    staff = models.ForeignKey(StaffProfile)
     course = models.ForeignKey(Course)
 
 class StaffHasAWorkPeriod(models.Model):
-    staff = models.ForeignKey(Staff)
+    staff = models.ForeignKey(StaffProfile)
     workPeriod = models.ForeignKey(WorkPeriod)
     
 class WorkPeriodAssignedToExamCenter(models.Model):
@@ -98,7 +118,7 @@ class WorkPeriodAssignedToExamCenter(models.Model):
     
 class StudentTakingTest(models.Model):
     test = models.ForeignKey(Test)
-    student = models.ForeignKey(Student)
+    student = models.ForeignKey(StudentProfile)
     dateCompleted = models.DateField()
 
 

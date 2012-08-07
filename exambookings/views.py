@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from exambookings.models import Booking, Staff
+from exambookings.models import Booking, StaffProfile
 from django.views.generic import DetailView, ListView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin
 
@@ -27,8 +27,9 @@ class ShowBookings(ListView):
         if (self.request.user.has_perm('exambookings.exam_center_view')):
             return Booking.objects.all()
         else:
-            theStaff = get_object_or_404(Staff, emailAddress__exact=self.request.user.email)
-            return Booking.objects.filter(courseTeacher=theStaff)
+            theStaffBaseProfile = get_object_or_404(BaseProfile, emailAddress__exact=self.request.user.email)
+            theStaffUser = theStaffBaseProfile.user
+            return Booking.objects.filter(courseTeacher=theStaffUser)
 
 @login_required
 def static_page(request, file_name):
