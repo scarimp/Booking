@@ -24,30 +24,41 @@ class WorkPeriodAssignedToExamCenterInline(admin.TabularInline):
 class StaffHasAWordPeriodInline(admin.TabularInline):
     model = StaffHasAWorkPeriod
     extra = 1
+
 #Model.Admins
 class TestAdmin(admin.ModelAdmin):
     model = Test
     inlines = (CourseAssessedByTestInline,StudentTakingTestInline)
-class StudentAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None, {'fields': ['firstName']}),
-        (None, {'fields': ['lastName']}),
-        (None, {'fields': ['emailAddress']}),
-        (None, {'fields': ['grade']}),
-        (None, {'fields': ['accomodations']}),
-    ]
-    inlines = (StudentBelongsToCourseInline,)
+# class StudentAdmin(admin.ModelAdmin):
+#     fieldsets = [
+#         (None, {'fields': ['firstName']}),
+#         (None, {'fields': ['lastName']}),
+#         (None, {'fields': ['emailAddress']}),
+#         (None, {'fields': ['grade']}),
+#         (None, {'fields': ['accomodations']}),
+#     ]
+#     inlines = (StudentBelongsToCourseInline,)
 class CourseAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['subject']}),
         (None, {'fields': ['level']}),
     ]
+
+class StaffProfileInlineAdmin(admin.StackedInline):
+    model = StaffProfile
+
+class StudentProfileInlineAdmin(admin.StackedInline):
+    model = StudentProfile
+
+
 #Registering
-admin.site.register(Student, StudentAdmin)
+#admin.site.register(Student, StudentAdmin)
+admin.site.register(StudentProfile)
+admin.site.register(StaffProfile)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Test, TestAdmin)
 admin.site.register(ExamCenter)
-admin.site.register(Staff)
+#admin.site.register(Staff)
 admin.site.register(WorkPeriod)
 admin.site.register(Booking)
 
