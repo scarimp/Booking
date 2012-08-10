@@ -25,12 +25,24 @@ class ShowBookings(ListView):
 
     def get_queryset(self):
         if (self.request.user.has_perm('exambookings.exam_center_view')):
-            return Booking.objects.all()
+            bookings = Booking.objects.all()
         else:
             theStaffBaseProfile = get_object_or_404(BaseProfile, emailAddress__exact=self.request.user.email)
             theStaffUser = theStaffBaseProfile.user
-            return Booking.objects.filter(courseTeacher=theStaffUser)
+            bookings = Booking.objects.filter(courseTeacher=theStaffUser)
 
+        bookings_list = []
+        for booking in bookings:
+            bookings_list.append(
+                {"studentFirstName": booking.studentProfile.baseProfile.user.first_name,
+                 "studentLastName": booking.studentProfile.baseProfile.user.last_name,
+                 "course": booking.course,
+                 "test": booking.test,
+                 "examCenter": booking.examCenter,
+                 "courseTeacher": booking.courseTeacherProfile,
+                 "workPeriod": booking.workPeriod })
+        return bookings_list
+        
 @login_required
 def static_page(request, file_name):
     return render_to_response('exambookings/static_pages/'+file_name, {})
