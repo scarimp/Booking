@@ -11,7 +11,7 @@ class BaseProfile(UserenaBaseProfile):
     user = models.OneToOneField(User,
                                 unique=True,
                                 verbose_name= ('user'),
-                                related_name='base_profile')
+                                related_name='baseProfile')
     #firstName = models.CharField(max_length=25)
     #lastName = models.CharField(max_length=25)
     #emailAddress = models.EmailField(max_length=254)

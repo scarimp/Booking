@@ -8,7 +8,7 @@ class StudentProfile(models.Model):
     baseProfile = models.OneToOneField(BaseProfile,
                                 unique=True,
                                 verbose_name= ('base_profile'),
-                                related_name='student_profile')
+                                related_name='studentProfile')
     grade = models.IntegerField(max_length=2)
     accomodations = models.TextField(max_length=400)
 
@@ -53,7 +53,7 @@ class StaffProfile(models.Model):
     baseProfile = models.OneToOneField(BaseProfile,
                                 unique=True,
                                 verbose_name= ('base_profile'),
-                                related_name='staff_profile')
+                                related_name='staffProfile')
     courses = models.ManyToManyField(Course, through='StaffTeachingCourse')
     workPeriods = models.ManyToManyField(WorkPeriod, through='StaffHasAWorkPeriod')
     speciality = models.TextField(max_length=400)

@@ -26,10 +26,11 @@ class ShowBookings(ListView):
     def get_queryset(self):
         if (self.request.user.has_perm('exambookings.exam_center_view')):
             bookings = Booking.objects.all()
+        elif (self.request.user.has_perm('exambookings.teacher_view')):
+            #theStaffBaseProfile = get_object_or_404(BaseProfile, emailAddress__exact=self.request.user.email)
+            bookings = Booking.objects.filter(courseTeacherProfile=self.request.user.baseProfile.staffProfile)
         else:
-            theStaffBaseProfile = get_object_or_404(BaseProfile, emailAddress__exact=self.request.user.email)
-            theStaffUser = theStaffBaseProfile.user
-            bookings = Booking.objects.filter(courseTeacher=theStaffUser)
+            bookings = []
 
         bookings_list = []
         for booking in bookings:
