@@ -1,26 +1,19 @@
 from django.db import models
 import datetime
 
-from django.contrib.auth.models import User
+from profiles.models import BaseProfile
 
 # Create your models here.
-# class Student(models.Model):
-#     firstName = models.CharField(max_length=25)
-#     lastName = models.CharField(max_length=25)
-#     emailAddress = models.EmailField(max_length=254)
-#     grade = models.IntegerField(max_length=2)
-#     accomodations = models.TextField(max_length=400)
-    
-#     def __unicode__(self):
-#         return (self.firstName + " and " + str(self.emailAddress))
-    
 class StudentProfile(models.Model):
-    user = models.OneToOneField(User,
+    baseProfile = models.OneToOneField(BaseProfile,
                                 unique=True,
-                                verbose_name= ('user'),
+                                verbose_name= ('base_profile'),
                                 related_name='student_profile')
     grade = models.IntegerField(max_length=2)
     accomodations = models.TextField(max_length=400)
+
+    def __unicode__(self):
+        return (self.baseProfile.user.first_name + " " + self.baseProfile.user.last_name + " profile")
     
 class Test(models.Model):
     name = models.CharField(max_length=40)
@@ -56,24 +49,17 @@ class ExamCenter(models.Model):
     def __unicode__(self):
         return (self.roomNumber + " with " + str(self.deskSeats) + " and  " + str(self.computerSeats) + " seats")
         
-# class Staff(models.Model):
-#     name = models.CharField(max_length=25)
-#     emailAddress = models.EmailField(max_length=254)
-#     speciality = models.TextField(max_length=400)
-#     courses = models.ManyToManyField(Course, through='StaffTeachingCourse')
-#     workPeriods = models.ManyToManyField(WorkPeriod, through='StaffHasAWorkPeriod')
-    
-#     def __unicode__(self):
-#         return (self.name + " and " + str(self.emailAddress))
-
 class StaffProfile(models.Model):
-    user = models.OneToOneField(User,
+    baseProfile = models.OneToOneField(BaseProfile,
                                 unique=True,
-                                verbose_name= ('user'),
+                                verbose_name= ('base_profile'),
                                 related_name='staff_profile')
     courses = models.ManyToManyField(Course, through='StaffTeachingCourse')
     workPeriods = models.ManyToManyField(WorkPeriod, through='StaffHasAWorkPeriod')
     speciality = models.TextField(max_length=400)
+
+    def __unicode__(self):
+        return (self.baseProfile.user.first_name + " " + self.baseProfile.user.last_name + " profile")    
 
 
 class Booking(models.Model):
