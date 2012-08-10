@@ -63,11 +63,11 @@ class StaffProfile(models.Model):
 
 
 class Booking(models.Model):
-    student = models.ForeignKey(StudentProfile)
+    studentProfile = models.ForeignKey(StudentProfile)
     course = models.ForeignKey(Course)
     test = models.ForeignKey(Test)
     examCenter = models.ForeignKey(ExamCenter)
-    courseTeacher = models.ForeignKey(StaffProfile)
+    courseTeacherProfile = models.ForeignKey(StaffProfile)
     workPeriod = models.ForeignKey(WorkPeriod)
 
     class Meta:
