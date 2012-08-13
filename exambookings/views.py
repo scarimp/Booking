@@ -23,14 +23,13 @@ class ShowBookings(StaffOnlyViewMixin, ListView):
     model = Booking
     context_object_name="bookings_list"
     template_name = 'exambookings/bookings_list.html'
-        
 
     def get_queryset(self):
         if (self.request.user.has_perm('exambookings.exam_center_view')):
             bookings = Booking.objects.all()
         elif (self.request.user.has_perm('exambookings.teacher_view')):
             #theStaffBaseProfile = get_object_or_404(BaseProfile, emailAddress__exact=self.request.user.email)
-            bookings = Booking.objects.filter(courseTeacherProfile=self.request.user.baseProfile.staffProfile)
+            bookings = Booking.objects.filter(courseTeacherProfile=self.request.user.get_profile().staffProfile)
         else:
             bookings = []
 
