@@ -10,6 +10,7 @@ from django.template import RequestContext
 from exambookings.models import Booking, StaffProfile
 from django.views.generic import DetailView, ListView
 
+from django.views.generic.edit import CreateView
 
 def any_permission_required(*perms):
     return user_passes_test(lambda u: any(u.has_perm(perm) for perm in perms))
@@ -18,6 +19,18 @@ class StaffOnlyViewMixin(object):
     @method_decorator(any_permission_required('exambookings.teacher_view', 'exambookings.exam_center_view'))
     def dispatch(self, *args, **kwargs):
         return super(StaffOnlyViewMixin, self).dispatch(*args, **kwargs)
+
+
+class CreateBooking(StaffOnlyViewMixin, CreateView):
+    model = Booking
+#    template_name_suffix = "_create_form" # looks for template "booking_create_form.html"
+    context_object_name = "create_booking"
+    template_name = 'exambookings/make_a_booking.html'
+
+    def render_to_response(self, context, **response_kwargs):
+        #return django.shortcuts.render_to_response('exambookings/make_a_booking.html', {})
+        return super(CreateBooking, self).render_to_response(context, **response_kwargs)
+        
 
 class ShowBookings(StaffOnlyViewMixin, ListView):
     model = Booking
