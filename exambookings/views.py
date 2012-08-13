@@ -18,7 +18,8 @@ class StaffOnlyViewMixin(object):
     @method_decorator(any_permission_required('exambookings.teacher_view', 'exambookings.exam_center_view'))
     def dispatch(self, *args, **kwargs):
         return super(StaffOnlyViewMixin, self).dispatch(*args, **kwargs)
-class ShowBookings(ListView):
+
+class ShowBookings(StaffOnlyViewMixin, ListView):
     model = Booking
     context_object_name="bookings_list"
     template_name = 'exambookings/bookings_list.html'
