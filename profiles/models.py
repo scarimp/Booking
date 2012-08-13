@@ -15,7 +15,8 @@ class BaseProfile(UserenaBaseProfile):
     #firstName = models.CharField(max_length=25)
     #lastName = models.CharField(max_length=25)
     #emailAddress = models.EmailField(max_length=254)
-    role = models.CharField(max_length=25)
+
+    #role = models.CharField(max_length=25) #unneeded
 
     # django auth User class already has fields:
     # first_name = models.CharField(_('first name'), max_length=30, blank=True)

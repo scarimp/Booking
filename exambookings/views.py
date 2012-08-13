@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from exambookings.models import Booking, StaffProfile
+from exambookings.models import Booking #, StaffProfile
 from django.views.generic import DetailView, ListView
 
 from django.views.generic.edit import CreateView
