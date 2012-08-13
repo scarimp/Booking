@@ -9,19 +9,20 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from exambookings.models import Booking, StaffProfile
 from django.views.generic import DetailView, ListView
-from django.views.generic.detail import SingleObjectTemplateResponseMixin
+
 
 def any_permission_required(*perms):
     return user_passes_test(lambda u: any(u.has_perm(perm) for perm in perms))
 
+class StaffOnlyViewMixin(object):
+    @method_decorator(any_permission_required('exambookings.teacher_view', 'exambookings.exam_center_view'))
+    def dispatch(self, *args, **kwargs):
+        return super(StaffOnlyViewMixin, self).dispatch(*args, **kwargs)
 class ShowBookings(ListView):
     model = Booking
     context_object_name="bookings_list"
     template_name = 'exambookings/bookings_list.html'
         
-    @method_decorator(any_permission_required('exambookings.teacher_view', 'exambookings.exam_center_view'))
-    def dispatch(self, *args, **kwargs):
-        return super(ShowBookings, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
         if (self.request.user.has_perm('exambookings.exam_center_view')):
