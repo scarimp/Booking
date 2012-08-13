@@ -76,14 +76,87 @@ from django.contrib.auth.models import User
 #             ("teacher_view", "Can view teacher's own bookings"),
 #             ("exam_center_view", "Can view all bookings"),
 #             )
+
 class Booking(models.Model):
+    GRADE_TEN = 10
+    GRADE_ELEVEN = 11
+    GRADE_TWELVE = 12
+    STUDENT_GRADE_CHOICES = (
+        (GRADE_TEN, '10'),
+        (GRADE_ELEVEN, '11'),
+        (GRADE_TWELVE, '12'),
+        )
+    
+    EXAM_CENTER_RM_100 = '100A'
+    EXAM_CENTER_CHOICES = (
+        (EXAM_CENTER_RM_100, "Main Exam Center - Rm 100"),
+        )
+    
+    PERIOD_TUTORIAL = 830
+    PERIOD_ONE = 900
+    PERIOD_TWO = 1030
+    PERIOD_LUNCH = 1200
+    PERIOD_THREE = 1230
+    PERIOD_FOUR = 1400
+    PERIOD_AFTERSCHOOL = 1530
+    TEST_PERIOD_CHOICES = (
+        (PERIOD_TUTORIAL, 'Tutorial Time'),
+        (PERIOD_ONE, 'Period 1'),
+        (PERIOD_TWO, 'Period 2'),
+        (PERIOD_LUNCH, 'Lunch Time'),
+        (PERIOD_THREE, 'Period 3'),
+        (PERIOD_FOUR, 'Period 4'),
+        (PERIOD_AFTERSCHOOL, 'After School'),
+        )
+
+    # studentProfile = models.ForeignKey(StudentProfile)
+    studentFirstName = models.CharField(max_length=30)
+    studentLastName = models.CharField(max_length=30)
+    studentGrade = models.IntegerField(choices=STUDENT_GRADE_CHOICES,
+                                       default=GRADE_TEN)
+    
+    # course = models.ForeignKey(Course)
+    testCourseName = models.CharField(max_length=40)
+    
+    # test = models.ForeignKey(Test)
+    testName = models.CharField(max_length=40)
+    testDate = models.DateField()
+    testDuration = models.CharField(max_length=40)
+    
+    # examCenter = models.ForeignKey(ExamCenter)
+    examCenter = models.CharField(max_length=5,
+                                  choices=EXAM_CENTER_CHOICES,
+                                  default=EXAM_CENTER_RM_100)
+    
+    # courseTeacherProfile = models.ForeignKey(StaffProfile)
+    courseTeacher = models.ForeignKey(User)
+    
+    # workPeriod = models.ForeignKey(WorkPeriod)
+    testPeriod = models.IntegerField(choices=TEST_PERIOD_CHOICES,
+                                     default=PERIOD_AFTERSCHOOL)
+
+    # accomodations
+    extendedTimeAccomodation = models.BooleanField()
+    computerAccomodation = models.BooleanField()
+    scribeAccomodation = models.BooleanField()
+    enlargementsAccomodation = models.BooleanField()
+    readerAccomodation = models.BooleanField()
+    isolationQuietAccomodation = models.BooleanField()
+
+    # allowances
+    ellDictionaryAllowance = models.BooleanField()
+    calculatorManipulativesAllowance = models.BooleanField()
+    openBookNotesAllowance = models.BooleanField()
+    computerInternetAllowance = models.BooleanField()
+    englishDictionaryThesaurusAllowance = models.BooleanField()
+    otherAllowances = models.CharField(max_length=200, blank=True)
 
     class Meta:
         permissions = (
             ("teacher_view", "Can view teacher's own bookings"),
             ("exam_center_view", "Can view all bookings"),
             )
-
+        
 
 #Relations
 # class StudentBelongsToCourse(models.Model):

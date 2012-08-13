@@ -42,20 +42,20 @@ class ShowBookings(StaffOnlyViewMixin, ListView):
             bookings = Booking.objects.all()
         elif (self.request.user.has_perm('exambookings.teacher_view')):
             #theStaffBaseProfile = get_object_or_404(BaseProfile, emailAddress__exact=self.request.user.email)
-            bookings = Booking.objects.filter(courseTeacherProfile=self.request.user.get_profile().staffProfile)
+            bookings = Booking.objects.filter(courseTeacher=self.request.user)
         else:
             bookings = []
 
         bookings_list = []
         for booking in bookings:
             bookings_list.append(
-                {"studentFirstName": booking.studentProfile.baseProfile.user.first_name,
-                 "studentLastName": booking.studentProfile.baseProfile.user.last_name,
-                 "course": booking.course,
-                 "test": booking.test,
+                {"studentFirstName": booking.studentFirstName,
+                 "studentLastName": booking.studentLastName,
+                 "course": booking.testCourseName,
+                 "test": booking.testName,
                  "examCenter": booking.examCenter,
-                 "courseTeacher": booking.courseTeacherProfile,
-                 "workPeriod": booking.workPeriod })
+                 "courseTeacher": '' + booking.courseTeacher.first_name + ' ' + booking.courseTeacher.last_name,
+                 "workPeriod": booking.testPeriod })
         return bookings_list
         
 @login_required
